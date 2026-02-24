@@ -10,4 +10,9 @@ package cw01;
  */
 public class Customer {
     
+    private 
+    
+    Customer(){
+        
+    }
 }
