@@ -15,3 +15,23 @@ buildNumber.properties
 .project
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
+
+# Build folders
+build/
+dist/
+
+# Compiled files
+*.class
+
+# NetBeans private files
+nbproject/private/
+
+# NetBeans generated
+nbproject/private/
+nbproject/*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+
