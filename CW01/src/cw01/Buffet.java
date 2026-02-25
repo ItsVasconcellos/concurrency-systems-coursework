@@ -13,6 +13,14 @@ public class Buffet {
     private int coffeeCups;
     private int teaCups;
     private int cakeSlices;
+    public Piano piano;
+
+    Buffet(int cake, int cofeee, int tea) {
+        this.cakeSlices = cake;
+        this.coffeeCups = cofeee;
+        this.teaCups = tea;
+        this.piano = new Piano();
+    }
 
     synchronized void refillCoffeCups(int coffeeCups) {
         if (coffeeCups <= 0) {
@@ -35,7 +43,19 @@ public class Buffet {
         this.cakeSlices += cakeSlices;
     }
 
-    synchronized void getOrder(int cakeSlices, int teaCups, int cofeeeCups) {
+    public int getCoffeeCups() {
+        return coffeeCups;
+    }
+
+    public int getTeaCups() {
+        return teaCups;
+    }
+
+    public int getCakeSlices() {
+        return cakeSlices;
+    }
+
+    private synchronized void getOrder(int cakeSlices, int teaCups, int cofeeeCups) throws InterruptedException {
         if (cakeSlices == 1) {
             while (this.cakeSlices <= 0) {
                 wait();
@@ -61,25 +81,28 @@ public class Buffet {
     }
 
     synchronized void takeOrder(int orderType) {
-        switch (orderType) {
-            case 1:
-                getOrder(cakeSlices = 0, teaCups = 0, coffeeCups = 1);
-                break;
-            case 2:
-                getOrder(cakeSlices = 0, teaCups = 1, coffeeCups = 0);
-                break;
-            case 3:
-                getOrder(cakeSlices = 1, teaCups = 1, coffeeCups = 0);
-                break;
-            case 4:
-                getOrder(cakeSlices = 1, teaCups = 0, coffeeCups = 1);
-                break;
-            case 5:
-                getOrder(cakeSlices = 1, teaCups = 0, coffeeCups = 0);
-                break;
-            default:
-                throw new IllegalArgumentException("sss");
-                break;
+        try {
+            switch (orderType) {
+                case 1:
+                    getOrder(cakeSlices = 0, teaCups = 0, coffeeCups = 1);
+                    break;
+                case 2:
+                    getOrder(cakeSlices = 0, teaCups = 1, coffeeCups = 0);
+                    break;
+                case 3:
+                    getOrder(cakeSlices = 1, teaCups = 1, coffeeCups = 0);
+                    break;
+                case 4:
+                    getOrder(cakeSlices = 1, teaCups = 0, coffeeCups = 1);
+                    break;
+                case 5:
+                    getOrder(cakeSlices = 1, teaCups = 0, coffeeCups = 0);
+                    break;
+                default:
+                    throw new IllegalArgumentException("Argumente should range between 1-5");
+            }
+        } catch (InterruptedException e) {
+            System.out.println("Waiting for order to be ready.");
         }
     }
 
