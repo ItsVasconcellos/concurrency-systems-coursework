@@ -27,8 +27,8 @@ public class Simulation {
 
     public long generateRandomTime() {
         if (isSpedUp) {
-            return (long) (1 + Math.random() * 0.5 * 100);
+            return (long) (1 + Math.random() * 0.5 * 1000);
         }
-        return (long) (1 + Math.random() * 100);
+        return (long) (1 + Math.random() * 1000);
     }
 }

@@ -24,16 +24,17 @@ public class Customer extends Thread {
         while (s.isSimulating()) {
             try {
                 int action = (int) ((Math.random() * 6) + 1);
-                System.out.println("Action type:" + action);
+                Long action_length = s.generateRandomTime();
                 if (action <= 5) {
+                    System.out.println(this.name + " will get food from the buffet.");
                     b.takeOrder(action, this.name);
                 } else if (action == 6) {
+                    System.out.println(this.name + " will play the piano.");
                     b.piano.play();
                 } else {
-                    Long music_length = s.generateRandomTime();
-                    System.out.println("Listen to music for: " + music_length + "s");
-                    Thread.sleep(music_length * 100);
+                    System.out.println(this.name + " will listen to music for: " + action_length + "ms");
                 }
+                Thread.sleep(action_length * 100);
             } catch (InterruptedException e) {
                 System.out.println("Thread interrompida");
             }

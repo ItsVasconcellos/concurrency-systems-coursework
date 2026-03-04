@@ -10,11 +10,9 @@ package cw01;
  */
 public class Main {
 
-    public static void main(String args[]) {
-        int customers = 20;
-        int staff = 3;
+    public static void main(int customers, int staff, int[] buffet_items) {        
         System.out.println("Teste");
-        Buffet buffet = new Buffet(5, 5, 5);
+        Buffet buffet = new Buffet(buffet_items[0],buffet_items[1],buffet_items[2]);
         Simulation s = new Simulation();
         int size = customers + staff;
         Thread threads[] = new Thread[size];
