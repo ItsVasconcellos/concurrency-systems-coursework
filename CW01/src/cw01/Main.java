@@ -15,17 +15,19 @@ public class Main {
         int staff = 3;
         System.out.println("Teste");
         Buffet buffet = new Buffet(5, 5, 5);
-        Thread customerArray[] = new Thread[customers];
-        for (int i = 0; i < customerArray.length; i++) {
-            customerArray[i] = new Thread(new Customer(buffet, "Customer - " + (i + 1)));
-            customerArray[i].start();
+        Simulation s = new Simulation();
+        int size = customers + staff;
+        Thread threads[] = new Thread[size];
+
+        for (int i = 0; i < customers; i++) {
+            threads[i] = new Thread(new Customer(buffet, "Customer - " + (i + 1), s));
+            threads[i].start();
         }
-        for (int j = 0; j < customerArray.length; j++) {
-            try {
-                customerArray[j].join();
-            } catch (Exception e) {
-                System.out.println(e.toString());
-            }
+
+        for (int i = 0; i < staff; i++) {
+            threads[i] = new Thread(new Staff(buffet, "Staff- " + (i + 1), s));
+            threads[i].start();
         }
+
     }
 }
