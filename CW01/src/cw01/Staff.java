@@ -27,12 +27,12 @@ public class Staff extends Thread {
     public void run() {
         while (s.isSimulating()) {
             try {
-                System.out.println("Staff will refill " + mapType());
                 Long working_time = s.generateRandomTime();
-                System.out.println("Listen to music for: " + working_time + "s");
-                Thread.sleep(working_time * 100);
                 int quantity = (int) ((Math.random() * 4) + 1);
+                System.out.println("Staff is refilling " + quantity + " " + mapType());
                 this.b.refillItem(type, quantity);
+                System.out.println("Staff will prepare more " + mapType() + " in " + working_time + "s");
+                Thread.sleep(working_time * 1000);
 
             } catch (InterruptedException e) {
                 System.out.println("Thread interrompida");

@@ -15,7 +15,7 @@ public class Buffet {
     private int cakeSlices;
     public Piano piano;
 
-    Buffet(int cake, int cofeee, int tea) {
+    Buffet(int cake, int tea, int cofeee) {
         this.cakeSlices = cake;
         this.coffeeCups = cofeee;
         this.teaCups = tea;
@@ -55,9 +55,11 @@ public class Buffet {
         return cakeSlices;
     }
 
-    private synchronized void getOrder(int cakeSlices, int teaCups, int cofeeeCups) throws InterruptedException {
+    private synchronized void getOrder(int cakeSlices, int teaCups, int cofeeeCups, String name)
+            throws InterruptedException {
         if (cakeSlices == 1) {
             while (this.cakeSlices <= 0) {
+                System.out.println(name + " is waiting for cake.");
                 wait();
             }
             --cakeSlices;
@@ -65,6 +67,7 @@ public class Buffet {
         }
         if (teaCups == 1) {
             while (this.teaCups <= 0) {
+                System.out.println(name + " is waiting for tea.");
                 wait();
             }
             --teaCups;
@@ -72,6 +75,7 @@ public class Buffet {
         }
         if (cofeeeCups == 1) {
             while (this.teaCups <= 0) {
+                System.out.println(name + " is waiting for coffee.");
                 wait();
             }
             --teaCups;
@@ -84,20 +88,19 @@ public class Buffet {
         try {
             switch (orderType) {
                 case 1:
-                    System.out.println("");
-                    getOrder(cakeSlices = 0, teaCups = 0, coffeeCups = 1);
+                    getOrder(cakeSlices = 0, teaCups = 0, coffeeCups = 1, name);
                     break;
                 case 2:
-                    getOrder(cakeSlices = 0, teaCups = 1, coffeeCups = 0);
+                    getOrder(cakeSlices = 0, teaCups = 1, coffeeCups = 0, name);
                     break;
                 case 3:
-                    getOrder(cakeSlices = 1, teaCups = 1, coffeeCups = 0);
+                    getOrder(cakeSlices = 1, teaCups = 1, coffeeCups = 0, name);
                     break;
                 case 4:
-                    getOrder(cakeSlices = 1, teaCups = 0, coffeeCups = 1);
+                    getOrder(cakeSlices = 1, teaCups = 0, coffeeCups = 1, name);
                     break;
                 case 5:
-                    getOrder(cakeSlices = 1, teaCups = 0, coffeeCups = 0);
+                    getOrder(cakeSlices = 1, teaCups = 0, coffeeCups = 0, name);
                     break;
                 default:
                     throw new IllegalArgumentException("Argumente should range between 1-5");
