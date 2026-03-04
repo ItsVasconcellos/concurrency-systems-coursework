@@ -22,21 +22,21 @@ public class Buffet {
         this.piano = new Piano();
     }
 
-    synchronized void refillCoffeCups(int coffeeCups) {
+    private synchronized void refillCoffeCups(int coffeeCups) {
         if (coffeeCups <= 0) {
             throw new IllegalArgumentException("Cannot refill 0 or negative cups of coffee into the buffet");
         }
         this.coffeeCups += coffeeCups;
     }
 
-    synchronized void refillTeaCups(int teaCups) {
+    private synchronized void refillTeaCups(int teaCups) {
         if (teaCups <= 0) {
             throw new IllegalArgumentException("Cannot refill 0 or negative cups of tea into the buffet");
         }
         this.teaCups += teaCups;
     }
 
-    synchronized void refillCakeSlices(int cakeSlices) {
+    private synchronized void refillCakeSlices(int cakeSlices) {
         if (cakeSlices <= 0) {
             throw new IllegalArgumentException("Cannot refill 0 or negative slices of cake into the buffet");
         }
@@ -80,10 +80,11 @@ public class Buffet {
         return;
     }
 
-    synchronized void takeOrder(int orderType) {
+    synchronized void takeOrder(int orderType, String name) {
         try {
             switch (orderType) {
                 case 1:
+                    System.out.println("");
                     getOrder(cakeSlices = 0, teaCups = 0, coffeeCups = 1);
                     break;
                 case 2:
@@ -103,6 +104,20 @@ public class Buffet {
             }
         } catch (InterruptedException e) {
             System.out.println("Waiting for order to be ready.");
+        }
+    }
+
+    synchronized void refillItem(int type, int quantity) {
+        switch (type) {
+            case 1:
+                refillCoffeCups(quantity);
+                break;
+            case 2:
+                refillTeaCups(quantity);
+            case 3:
+                refillCakeSlices(quantity);
+            default:
+                break;
         }
     }
 
