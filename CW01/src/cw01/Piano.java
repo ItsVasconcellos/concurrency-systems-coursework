@@ -17,23 +17,23 @@ public class Piano {
             semaphore.acquire();
             Long songs = (long) (1 + Math.random() * 100);
             System.out.println(Thread.currentThread().getName()
-                    + " using the piano for  " + songs
+                    + " using the piano for " + songs
                     + " songs, for time " + songs
                     + " s, available seats now: "
                     + semaphore.availablePermits());
             Thread.sleep(songs * 100);
         } catch (InterruptedException ex) {
             ex.printStackTrace();
-        } finally {
-            // System.out.println(Thread.currentThread().getName()
-            // + " packs groceries, there are available tills " +
-            // semaphore.availablePermits()
-            // + " clients in the queue " + semaphore.getQueueLength());
+        } finally { 
+             System.out.println(Thread.currentThread().getName()
+             + " is finishing playing the piano, there are " +
+             semaphore.availablePermits()
+             + " available spots and " + semaphore.getQueueLength() + " clients in the queue");
             semaphore.release();
             System.out.println(
                     Thread.currentThread().getName() + " will stop playing the piano, there are "
                             + semaphore.availablePermits()
-                            + "available seats. Customers in the queue: " + semaphore.getQueueLength());
+                            + " available seats. Customers in the queue: " + semaphore.getQueueLength());
         }
     }
 }

@@ -11,10 +11,10 @@ package cw01;
 public class Main {
 
     public static void main(String args[]) {
-        int customers = 5;
+        int customers = 20;
         int staff = 3;
         System.out.println("Teste");
-        Buffet buffet = new Buffet(2, 2, 2);
+        Buffet buffet = new Buffet(5, 5, 5);
         Thread customerArray[] = new Thread[customers];
         for (int i = 0; i < customerArray.length; i++) {
             customerArray[i] = new Thread(new Customer(buffet, "Customer - " + (i + 1)));
