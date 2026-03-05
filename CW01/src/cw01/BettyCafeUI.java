@@ -35,6 +35,7 @@ public class BettyCafeUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -52,6 +53,8 @@ public class BettyCafeUI extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         stopButton = new javax.swing.JButton();
+        fastRadioButton = new javax.swing.JRadioButton();
+        normalSpeed = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setAutoRequestFocus(false);
@@ -112,6 +115,15 @@ public class BettyCafeUI extends javax.swing.JFrame {
         stopButton.setEnabled(false);
         stopButton.addActionListener(this::stopButtonActionPerformed);
 
+        buttonGroup.add(fastRadioButton);
+        fastRadioButton.setText("Fast (2x speed)");
+        fastRadioButton.addActionListener(this::fastRadioButtonActionPerformed);
+
+        buttonGroup.add(normalSpeed);
+        normalSpeed.setSelected(true);
+        normalSpeed.setText("Normal Speed");
+        normalSpeed.addActionListener(this::normalSpeedActionPerformed);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -119,11 +131,9 @@ public class BettyCafeUI extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel4)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -140,14 +150,13 @@ public class BettyCafeUI extends javax.swing.JFrame {
                                     .addComponent(coffeeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(TeaComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(cakeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(17, 17, 17)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(stopButton, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(startButton, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 888, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(112, 112, 112))))
+                            .addComponent(fastRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(normalSpeed, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(startButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(stopButton, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 971, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -181,11 +190,15 @@ public class BettyCafeUI extends javax.swing.JFrame {
                             .addComponent(customerComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel8))
                         .addGap(18, 18, 18)
+                        .addComponent(normalSpeed)
+                        .addGap(18, 18, 18)
+                        .addComponent(fastRadioButton)
+                        .addGap(18, 18, 18)
                         .addComponent(startButton, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(stopButton, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(46, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 527, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(47, 47, 47))
         );
 
         pack();
@@ -198,6 +211,14 @@ public class BettyCafeUI extends javax.swing.JFrame {
         this.stopButton.setEnabled(false);
         this.startButton.setEnabled(true);
     }//GEN-LAST:event_stopButtonActionPerformed
+
+    private void normalSpeedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_normalSpeedActionPerformed
+        s.setIsSpedUp();
+    }//GEN-LAST:event_normalSpeedActionPerformed
+
+    private void fastRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fastRadioButtonActionPerformed
+        s.setIsSpedUp();
+    }//GEN-LAST:event_fastRadioButtonActionPerformed
 
     private void cakeComboBoxActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_cakeComboBoxActionPerformed
         // TODO add your handling code here:
@@ -254,9 +275,11 @@ public class BettyCafeUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> TeaComboBox;
+    private javax.swing.ButtonGroup buttonGroup;
     private javax.swing.JComboBox<String> cakeComboBox;
     private javax.swing.JComboBox<String> coffeeComboBox;
     private javax.swing.JComboBox<String> customerComboBox;
+    private javax.swing.JRadioButton fastRadioButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -267,6 +290,7 @@ public class BettyCafeUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JRadioButton normalSpeed;
     private javax.swing.JComboBox<String> staffComboBox;
     private javax.swing.JButton startButton;
     private javax.swing.JButton stopButton;
