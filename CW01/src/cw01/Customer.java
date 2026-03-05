@@ -26,18 +26,37 @@ public class Customer extends Thread {
                 int action = (int) ((Math.random() * 6) + 1);
                 Long action_length = s.generateRandomTime();
                 if (action <= 5) {
-                    System.out.println(this.name + " will get food from the buffet.");
-                    b.takeOrder(action, this.name);
+                    System.out.println(this.name + " wants " + this.mapTypeAction(action) + " from the buffet.");
+                    b.takeOrder(action, this.name);                
+                    Thread.sleep(action_length * 100);
                 } else if (action == 6) {
                     System.out.println(this.name + " will play the piano.");
                     b.piano.play();
                 } else {
                     System.out.println(this.name + " will listen to music for: " + action_length + "ms");
+                    Thread.sleep(action_length * 100);
                 }
-                Thread.sleep(action_length * 100);
             } catch (InterruptedException e) {
-                System.out.println("Thread interrompida");
+                System.out.println("Thread interrupted");
             }
+        }
+    }
+    
+    private String mapTypeAction(int action){
+        switch (action) {
+            case 1:                
+                return "a coffee"; 
+            case 2:                
+                return "a tea"; 
+            case 3:                
+                return "a cake"; 
+            case 4:                
+                return "coffee and cake"; 
+            case 5:                
+                return "tea and cake"; 
+            
+            default:
+                throw new AssertionError();
         }
     }
 }

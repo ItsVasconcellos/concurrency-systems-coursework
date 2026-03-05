@@ -55,6 +55,12 @@ public class Buffet {
         return cakeSlices;
     }
 
+    private void printQuantity() {
+        System.out.println(
+                "Buffet = " + getCakeSlices() + isSingular(cakeSlices, " cakes") + ", " + getTeaCups()
+                        + isSingular(teaCups, " teas") + ", " + getCoffeeCups() + isSingular(coffeeCups, " coffees"));
+    }
+
     private synchronized void getOrder(int cakeSlices, int teaCups, int cofeeeCups, String name)
             throws InterruptedException {
         if (cakeSlices == 1) {
@@ -81,6 +87,7 @@ public class Buffet {
             --teaCups;
             notifyAll();
         }
+        printQuantity();
         return;
     }
 
@@ -94,17 +101,18 @@ public class Buffet {
                     getOrder(cakeSlices = 0, teaCups = 1, coffeeCups = 0, name);
                     break;
                 case 3:
-                    getOrder(cakeSlices = 1, teaCups = 1, coffeeCups = 0, name);
+                    getOrder(cakeSlices = 1, teaCups = 0, coffeeCups = 0, name);
                     break;
                 case 4:
                     getOrder(cakeSlices = 1, teaCups = 0, coffeeCups = 1, name);
                     break;
                 case 5:
-                    getOrder(cakeSlices = 1, teaCups = 0, coffeeCups = 0, name);
+                    getOrder(cakeSlices = 1, teaCups = 1, coffeeCups = 0, name);
                     break;
                 default:
                     throw new IllegalArgumentException("Argumente should range between 1-5");
             }
+
         } catch (InterruptedException e) {
             System.out.println("Waiting for order to be ready.");
         }
@@ -122,6 +130,14 @@ public class Buffet {
             default:
                 break;
         }
+        printQuantity();
+    }
+
+    private String isSingular(int number, String name) {
+        if (number == 1) {
+            return name.replace("s", "");
+        }
+        return name;
     }
 
 }
