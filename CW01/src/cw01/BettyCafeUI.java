@@ -16,11 +16,13 @@ public class BettyCafeUI extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger
             .getLogger(BettyCafeUI.class.getName());
+    private Simulation s;
     /**
      * Creates new form BettyCafeUI
      */
     public BettyCafeUI() {
         initComponents();
+        this.s = new Simulation();
     }
 
     /**
@@ -49,6 +51,7 @@ public class BettyCafeUI extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
+        stopButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setAutoRequestFocus(false);
@@ -61,8 +64,8 @@ public class BettyCafeUI extends javax.swing.JFrame {
 
         jLabel3.setText("Cups of Coffee");
 
-        jButton1.setText("Start Simulation");
         jButton1.setAlignmentY(0.0F);
+        jButton1.setLabel("Start \nSimulation");
         jButton1.addActionListener(this::jButton1ActionPerformed);
 
         jLabel4.setFont(new java.awt.Font("Liberation Sans", 1, 16)); // NOI18N
@@ -104,6 +107,10 @@ public class BettyCafeUI extends javax.swing.JFrame {
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
+        stopButton.setText("Stop  Simulation");
+        stopButton.setAlignmentY(0.0F);
+        stopButton.addActionListener(this::stopButtonActionPerformed);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -133,8 +140,10 @@ public class BettyCafeUI extends javax.swing.JFrame {
                                     .addComponent(TeaComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(cakeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(24, 24, 24)
-                                .addComponent(jButton1)))
+                                .addGap(17, 17, 17)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(stopButton, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 888, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(112, 112, 112))))
@@ -170,15 +179,22 @@ public class BettyCafeUI extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(customerComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel8))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
-                        .addComponent(jButton1))
-                    .addComponent(jScrollPane1))
-                .addGap(64, 64, 64))
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(stopButton, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void stopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopButtonActionPerformed
+        System.out.println("---------------- End Simulation --------------------------");
+        s.isSimulating();
+    }//GEN-LAST:event_stopButtonActionPerformed
 
     private void cakeComboBoxActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_cakeComboBoxActionPerformed
         // TODO add your handling code here:
@@ -195,7 +211,8 @@ public class BettyCafeUI extends javax.swing.JFrame {
             PrintStream printStream = new PrintStream(new CustomOutputStream(jTextArea1));
             System.setOut(printStream);
             System.setErr(printStream);
-            Main.main(customers, staff, buffet_items);
+            System.out.println("-------------- Start Simulation -------------------------");
+            s.main(customers, staff, buffet_items);
         } catch (Exception e) {
             System.out.println("Exception when initializing the system: " + e.getMessage());
         }
@@ -247,5 +264,6 @@ public class BettyCafeUI extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JComboBox<String> staffComboBox;
+    private javax.swing.JButton stopButton;
     // End of variables declaration//GEN-END:variables
 }

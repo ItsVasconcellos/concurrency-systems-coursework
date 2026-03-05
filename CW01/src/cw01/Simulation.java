@@ -9,6 +9,24 @@ public class Simulation {
         this.isSpedUp = false;
     }
 
+    public void main(int customers, int staff, int[] buffet_items) {
+        Buffet buffet = new Buffet(buffet_items[0], buffet_items[1], buffet_items[2]);
+        Simulation s = this;
+        int size = customers + staff;
+        Thread threads[] = new Thread[size];
+
+        for (int i = 0; i < customers; i++) {
+            threads[i] = new Thread(new Customer(buffet, "Customer - " + (i + 1), s));
+            threads[i].start();
+        }
+
+        for (int i = 0; i < staff; i++) {
+            threads[i] = new Thread(new Staff(buffet, "Staff- " + (i + 1), s));
+            threads[i].start();
+        }
+
+    }
+
     public void setIsSpedUp() {
         this.isSpedUp = !this.isSpedUp;
     }
