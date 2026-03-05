@@ -21,7 +21,7 @@ public class Customer extends Thread {
 
     @Override
     public void run() {
-        while (s.isSimulating()) {
+        while (s.isSimulating() && !Thread.currentThread().isInterrupted()) {
             try {
                 int action = (int) ((Math.random() * 6) + 1);
                 Long action_length = s.generateRandomTime();

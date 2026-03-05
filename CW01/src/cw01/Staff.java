@@ -25,7 +25,7 @@ public class Staff extends Thread {
 
     @Override
     public void run() {
-        while (s.isSimulating()) {
+        while (s.isSimulating() && !Thread.currentThread().isInterrupted()) {
             try {
                 Long working_time = s.generateRandomTime();
                 int quantity = (int) ((Math.random() * 4) + 1);

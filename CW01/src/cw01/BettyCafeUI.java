@@ -38,7 +38,7 @@ public class BettyCafeUI extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        startButton = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         cakeComboBox = new javax.swing.JComboBox<>();
         TeaComboBox = new javax.swing.JComboBox<>();
@@ -64,9 +64,9 @@ public class BettyCafeUI extends javax.swing.JFrame {
 
         jLabel3.setText("Cups of Coffee");
 
-        jButton1.setAlignmentY(0.0F);
-        jButton1.setLabel("Start \nSimulation");
-        jButton1.addActionListener(this::jButton1ActionPerformed);
+        startButton.setAlignmentY(0.0F);
+        startButton.setLabel("Start \nSimulation");
+        startButton.addActionListener(this::startButtonActionPerformed);
 
         jLabel4.setFont(new java.awt.Font("Liberation Sans", 1, 16)); // NOI18N
         jLabel4.setText("Items");
@@ -109,6 +109,7 @@ public class BettyCafeUI extends javax.swing.JFrame {
 
         stopButton.setText("Stop  Simulation");
         stopButton.setAlignmentY(0.0F);
+        stopButton.setEnabled(false);
         stopButton.addActionListener(this::stopButtonActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -143,7 +144,7 @@ public class BettyCafeUI extends javax.swing.JFrame {
                                 .addGap(17, 17, 17)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(stopButton, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(startButton, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 888, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(112, 112, 112))))
@@ -180,7 +181,7 @@ public class BettyCafeUI extends javax.swing.JFrame {
                             .addComponent(customerComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel8))
                         .addGap(18, 18, 18)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(startButton, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(stopButton, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -193,14 +194,16 @@ public class BettyCafeUI extends javax.swing.JFrame {
 
     private void stopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopButtonActionPerformed
         System.out.println("---------------- End Simulation --------------------------");
-        s.isSimulating();
+        s.stopSimulation();
+        this.stopButton.setEnabled(false);
+        this.startButton.setEnabled(true);
     }//GEN-LAST:event_stopButtonActionPerformed
 
     private void cakeComboBoxActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_cakeComboBoxActionPerformed
         // TODO add your handling code here:
     }// GEN-LAST:event_cakeComboBoxActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton1ActionPerformed
+    private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton1ActionPerformed
         try {
             int customers = Integer.parseInt(customerComboBox.getSelectedItem().toString());
             int staff = Integer.parseInt(staffComboBox.getSelectedItem().toString());
@@ -213,6 +216,8 @@ public class BettyCafeUI extends javax.swing.JFrame {
             System.setErr(printStream);
             System.out.println("-------------- Start Simulation -------------------------");
             s.main(customers, staff, buffet_items);
+            this.startButton.setEnabled(false);
+            this.stopButton.setEnabled(true);
         } catch (Exception e) {
             System.out.println("Exception when initializing the system: " + e.getMessage());
         }
@@ -252,7 +257,6 @@ public class BettyCafeUI extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cakeComboBox;
     private javax.swing.JComboBox<String> coffeeComboBox;
     private javax.swing.JComboBox<String> customerComboBox;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -264,6 +268,7 @@ public class BettyCafeUI extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JComboBox<String> staffComboBox;
+    private javax.swing.JButton startButton;
     private javax.swing.JButton stopButton;
     // End of variables declaration//GEN-END:variables
 }
