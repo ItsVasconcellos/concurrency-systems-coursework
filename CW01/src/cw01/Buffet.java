@@ -84,7 +84,7 @@ public class Buffet {
                 System.out.println(name + " is waiting for coffee.");
                 wait();
             }
-            --teaCups;
+            --cofeeeCups;
             notifyAll();
         }
         printQuantity();
