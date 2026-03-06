@@ -28,13 +28,13 @@ public class Customer extends Thread {
                 if (action <= 5) {
                     System.out.println(this.name + " wants " + this.mapTypeAction(action) + " from the buffet.");
                     b.takeOrder(action, this.name);                
-                    Thread.sleep(action_length * 100);
+                    Thread.sleep(action_length * 10);
                 } else if (action == 6) {
                     System.out.println(this.name + " will play the piano.");
                     b.piano.play();
                 } else {
-                    System.out.println(this.name + " will listen to music for: " + action_length + "ms");
-                    Thread.sleep(action_length * 100);
+                    System.out.println(this.name + " will listen to music for: " + action_length*10 + "ms");
+                    Thread.sleep(action_length * 10);
                 }
             } catch (InterruptedException e) {
                 System.out.println("Thread interrupted");

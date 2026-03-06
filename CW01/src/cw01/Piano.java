@@ -12,8 +12,8 @@ public class Piano {
     public void play() {
         try {
             semaphore.acquire();
-            Long songs = (long) (1 + Math.random() * 100);
-            Thread.sleep(songs * 100);
+            Long songs = (long) (1 + Math.random() * 1000);
+            Thread.sleep(songs * 10);
         } catch (InterruptedException ex) {
             System.out.println("Thread interrupted");
         } finally { 

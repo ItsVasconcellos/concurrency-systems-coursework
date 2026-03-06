@@ -91,7 +91,7 @@ public class Buffet {
         return;
     }
 
-    synchronized void takeOrder(int orderType, String name) {
+    void takeOrder(int orderType, String name) {
         try {
             switch (orderType) {
                 case 1:
@@ -118,7 +118,7 @@ public class Buffet {
         }
     }
 
-    synchronized void refillItem(int type, int quantity) {
+    void refillItem(int type, int quantity) {
         switch (type) {
             case 1:
                 refillCoffeCups(quantity);

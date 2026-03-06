@@ -29,13 +29,15 @@ public class Staff extends Thread {
             try {
                 Long working_time = s.generateRandomTime();
                 int quantity = (int) ((Math.random() * 4) + 1);
-                System.out.println("Staff is refilling " + quantity + " " + mapType());
+                String plural = "";
+                if (quantity > 1){plural += "s";}
+                System.out.println("Staff is refilling " + quantity + " " + mapType() + plural );
                 this.b.refillItem(type, quantity);
-                System.out.println("Staff will prepare more " + mapType() + " in " + working_time + "s");
-                Thread.sleep(working_time * 1000);
+                System.out.println("Staff will prepare more " + mapType() + " in " + working_time/100 + "s");
+                Thread.sleep(working_time * 10);
 
             } catch (InterruptedException e) {
-                System.out.println("Thread interrompida");
+                System.out.println("Thread interrupted");
             }
         }
     }
@@ -43,11 +45,11 @@ public class Staff extends Thread {
     public String mapType() {
         switch (this.type) {
             case 1:
-                return "Coffee";
+                return "coffee";
             case 2:
-                return "Tea";
+                return "tea";
             case 3:
-                return "Cake";
+                return "cake";
             default:
                 return "";
         }
