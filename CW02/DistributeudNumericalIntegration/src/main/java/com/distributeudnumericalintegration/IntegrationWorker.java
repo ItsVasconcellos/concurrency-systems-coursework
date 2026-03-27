@@ -7,6 +7,8 @@ package com.distributeudnumericalintegration;
 import java.security.InvalidParameterException;
 import java.util.concurrent.Callable;
 import java.util.function.Function;
+import net.objecthunter.exp4j.Expression;
+import net.objecthunter.exp4j.ExpressionBuilder;
 
 /**
  *
@@ -15,22 +17,31 @@ import java.util.function.Function;
 public class IntegrationWorker implements Callable<IntegrationResult>{ 
     private IntegratorStrategy integrationStrategy;
     private Function<Double, Double> f;
+    private String equation;
     private double a;
     private double b;
     private int n;
     
-    public IntegrationWorker(IntegratorStrategy intStrat,Function<Double, Double> f, double a, double b, int n){
+    public IntegrationWorker(IntegratorStrategy intStrat,String equation, double a, double b, int n){
         this.integrationStrategy = intStrat;
-        this.f = f;
+        this.equation = equation;
         this.a = a;
         this.b = b;
         this.n = n;
     }
     
+    private Function<Double,Double> parseEquation(){
+         final Expression expression = new ExpressionBuilder(this.equation)
+                    .variable("x")
+                    .build();
+        return (Double xValue) -> { return expression.setVariable("x", xValue).evaluate();};
+    } 
+    
+    
     public IntegrationResult call() throws InvalidParameterException{
         try {
             long beginTime = System.nanoTime();
-            
+            this.f = this.parseEquation();
             double result = this.integrationStrategy.calculateIntegral(f, a, b, n);
             String name = this.integrationStrategy.getName();
             long endTime = System.nanoTime();

@@ -19,7 +19,7 @@ public class RiemannSumStrategy implements IntegratorStrategy{
         double x = 0;
         System.out.println(dx);
         for(int i = 0; i < n; i++){
-            x = dx*i+a;
+            x = (dx*i) + a;
             sum += f.apply(x);
         }
         return sum*dx;

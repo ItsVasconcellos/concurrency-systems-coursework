@@ -12,6 +12,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.function.Function;
+import java.util.InputMismatchException;
 
 /**
  *
@@ -21,18 +22,17 @@ public class DistributeudNumericalIntegration {
 
     public static void main(String[] args) throws InterruptedException, ExecutionException {
         Scanner scan = new Scanner(System.in);
+        ScanParser sp = new ScanParser(scan);
         System.out.println("Welcome to the Distributed Numerical Integration System!");
-//        System.out.println("Insert the equation");
-//        String email = scan.nextLine();
-        Function<Double,Double> f = x -> Math.pow(x,2);
+        String f = sp.VerifyParseEquation();
+//        Function<Double,Double> f = (x) -> Math.pow(x,2);
         System.out.println("Now, you will need to insert the interval to integrate the function, [A,B]");
         System.out.println("Insert the value for a");
-        Double a = Double.parseDouble(scan.nextLine());
+        Double a = sp.get_bound_interval();
         System.out.println("Insert the value for b");
-        Double b = Double.parseDouble(scan.nextLine());
+        Double b = sp.get_bound_interval();
         System.out.println("Now, you will need to insert how many portions should the method calculate. Remember that more means more precise");
-        System.out.println("Insert the value for N");
-        int n = Integer.parseInt(scan.nextLine());
+        int n = sp.get_n();
         
         List<IntegratorStrategy> integrators = List.of(new RiemannSumStrategy(),new TrapezoidalRuleStrategy());
         
@@ -43,6 +43,7 @@ public class DistributeudNumericalIntegration {
         for(IntegratorStrategy i: integrators ){
             futures.add(executor.submit(new IntegrationWorker(i, f, a, b, n)));
         }
+        
         
         for (Future<IntegrationResult> future : futures) {
             IntegrationResult result = future.get();
