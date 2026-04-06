@@ -22,7 +22,7 @@ public class ScanParser {
         this.scan = scan;
     }
     
-    public String VerifyParseEquation() 
+    public String verifyParseEquation() 
     {   
         Function<Double,Double> f = null;
         boolean parsed =false;
@@ -45,7 +45,7 @@ public class ScanParser {
 
     }  
     
-    public double get_bound_interval(){
+    public double getBoundInterval(){
         double n = 0;
         boolean initialized = false;
         while(!initialized){
@@ -60,7 +60,7 @@ public class ScanParser {
         return n;
     }
     
-    public int get_n(){
+    public int getNumberOfIterations(){
         boolean positive_n = false;
         int n = -1;
         while(!positive_n){

@@ -24,15 +24,15 @@ public class DistributeudNumericalIntegration {
         Scanner scan = new Scanner(System.in);
         ScanParser sp = new ScanParser(scan);
         System.out.println("Welcome to the Distributed Numerical Integration System!");
-        String f = sp.VerifyParseEquation();
+        String f = sp.verifyParseEquation();
 //        Function<Double,Double> f = (x) -> Math.pow(x,2);
         System.out.println("Now, you will need to insert the interval to integrate the function, [A,B]");
         System.out.println("Insert the value for a");
-        Double a = sp.get_bound_interval();
+        Double a = sp.getBoundInterval();
         System.out.println("Insert the value for b");
-        Double b = sp.get_bound_interval();
+        Double b = sp.getBoundInterval();
         System.out.println("Now, you will need to insert how many portions should the method calculate. Remember that more means more precise");
-        int n = sp.get_n();
+        int n = sp.getNumberOfIterations();
         
         List<IntegratorStrategy> integrators = List.of(new RiemannSumStrategy(),new TrapezoidalRuleStrategy());
         
