@@ -36,3 +36,5 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
+/CW02/DistributeudNumericalIntegration/target/
+/CW02/DistributedVoting/target/
