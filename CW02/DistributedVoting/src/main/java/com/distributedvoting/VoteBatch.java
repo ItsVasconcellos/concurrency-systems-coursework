@@ -13,8 +13,17 @@ import java.util.Map;
  * @author fvasconcellos
  */
 public class VoteBatch implements Serializable {
-    public String centreId;
-    public Map<String,Integer> voteCounter;
+    private String centreId;
+    private Map<String,Integer> voteCounter;
+    private boolean allVotesProcessed;
+
+    public boolean isAllVotesProcessed() {
+        return allVotesProcessed;
+    }
+
+    public void setAllVotesProcessed(boolean allVotesProcessed) {
+        this.allVotesProcessed = allVotesProcessed;
+    }
 
     public String getCentreId() { return centreId; }
 
@@ -31,9 +40,10 @@ public class VoteBatch implements Serializable {
     public VoteBatch( ){
     }
     
-    public VoteBatch(String centreId, Map<String, Integer> voteCounter ){
+    public VoteBatch(String centreId, Map<String, Integer> voteCounter, Boolean bln ){
         this.centreId = centreId;
         this.voteCounter = voteCounter;
+        this.allVotesProcessed = bln;
     }
     
 }

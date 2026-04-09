@@ -30,6 +30,7 @@ public class MainVoteCentre {
                 vc.generateVotes();
                 vc.sendVotes();
             }
+            vc.sendFinalMessage();
         }
 
     }    

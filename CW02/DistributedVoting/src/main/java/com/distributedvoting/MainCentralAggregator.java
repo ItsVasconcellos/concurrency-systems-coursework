@@ -18,6 +18,7 @@ import java.util.concurrent.TimeoutException;
  */
 public class MainCentralAggregator {
     public static String queueName = "Elections";
+    public static int totalVoteCentre = 3;
     
     public static void main(String[] args) throws IOException, TimeoutException {
         ConnectionFactory factory = new ConnectionFactory();
@@ -26,7 +27,7 @@ public class MainCentralAggregator {
         Channel channel = connection.createChannel();
 
         channel.queueDeclare(queueName, false, false, false, null);
-        CentralAggregator ca = new  CentralAggregator(queueName, channel);
+        CentralAggregator ca = new  CentralAggregator(queueName, channel,totalVoteCentre);
         System.out.println(" [*] Waiting for messages. To exit press CTRL+C");
 
         DeliverCallback deliverCallback = (consumerTag, delivery) -> {
