@@ -122,15 +122,19 @@ public class Buffet {
         switch (type) {
             case 1:
                 refillCoffeCups(quantity);
+                printQuantity();
                 break;
             case 2:
                 refillTeaCups(quantity);
+                printQuantity();
+                break;
             case 3:
-                refillCakeSlices(quantity);
+                refillCakeSlices(quantity);        
+                printQuantity();
+                break;
             default:
                 break;
         }
-        printQuantity();
     }
 
     private String isSingular(int number, String name) {

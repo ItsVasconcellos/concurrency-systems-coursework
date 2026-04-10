@@ -20,68 +20,66 @@ import org.json.JSONObject;
 public class CentralAggregator {
     private String queueName;
     private static final Set<String> parties = Set.of("Green", "Red", "Blue");
-    private Map<String, Map<String,Integer>> voteCenterPartialResult; 
-    private Map<String,Integer> totalVoteResult; 
+    private Map<String, Map<String, Integer>> voteCentresResult;
+    private Map<String, Integer> totalVoteResult;
     private Channel chanell;
     private int totalVoteCentre;
     private int RecievedVoteCente;
-    
-    public CentralAggregator(String queueName, Channel ch, int totalVoteCentre){
+
+    public CentralAggregator(String queueName, Channel ch, int totalVoteCentre) {
         this.queueName = queueName;
         this.chanell = ch;
         this.totalVoteCentre = totalVoteCentre;
-        this.voteCenterPartialResult = new HashMap<String, Map<String, Integer>>();
+        this.voteCentresResult = new HashMap<String, Map<String, Integer>>();
         this.totalVoteResult = new HashMap<String, Integer>();
         this.RecievedVoteCente = 0;
     }
-    
-    public void processVotes(String message) throws JsonProcessingException{
-        ObjectMapper mapper = new ObjectMapper();        
+
+    public void processVotes(String message) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
         VoteBatch vb = mapper.readValue(message, VoteBatch.class);
-        
-        // Verify if that voteCentre has ended its votes and if yes, if all voteCentres have finished.
-        if(vb.isAllVotesProcessed()){
+
+        // Verify if that voteCentre has ended its votes and if yes, if all voteCentres
+        // have finished.
+        if (vb.isAllVotesProcessed()) {
             this.RecievedVoteCente += 1;
             this.verifyIfElectionsEnded();
             return;
         }
-        
+
         // Get voteCentreId and the map of votes
         String centreId = vb.getCentreId();
-        Map<String,Integer> voteMap = vb.getVoteCounter();
-        
+        Map<String, Integer> voteMap = vb.getVoteCounter();
+
         // Add votes to the total amount of votes
-        voteMap.forEach((k,v) -> {
-            if(parties.contains(k)) {
+        voteMap.forEach((k, v) -> {
+            if (parties.contains(k)) {
                 totalVoteResult.merge(k, v, Integer::sum);
-            }
-            else {
+            } else {
                 System.err.println("  [!] Rejected votes for unknown party: " + k);
             }
         });
-        
+
         // Add votes to the VoteCentre
         this.addVotesToVoteCentreMap(centreId, voteMap);
-        displayCurrentTally();  
+        displayCurrentTally();
     }
 
-    private void addVotesToVoteCentreMap(String centreId, Map<String,Integer> voteMap){
-        Map<String, Integer> centerCount = this.voteCenterPartialResult.get(centreId);
-        if(centerCount != null ){
-            voteMap.forEach((k,v) -> {
-                if(parties.contains(k)) {
+    private void addVotesToVoteCentreMap(String centreId, Map<String, Integer> voteMap) {
+        Map<String, Integer> centerCount = this.voteCentresResult.get(centreId);
+        if (centerCount != null) {
+            voteMap.forEach((k, v) -> {
+                if (parties.contains(k)) {
                     centerCount.merge(k, v, Integer::sum);
-                }
-                else {
+                } else {
                     System.err.println("  [!] Rejected votes for unknown party: " + k);
                 }
             });
-        }
-        else{
-            this.voteCenterPartialResult.put(centreId,voteMap);
+        } else {
+            this.voteCentresResult.put(centreId, voteMap);
         }
     }
-    
+
     private void displayCurrentTally() {
         System.out.println(">>> CURRENT GLOBAL TALLY <<<");
         String winner = "Tie/None";
@@ -96,38 +94,39 @@ public class CentralAggregator {
         }
         System.out.println("Current Winner: " + winner.toUpperCase());
     }
-    
-    public void verifyIfElectionsEnded(){
-        if(this.RecievedVoteCente == this.totalVoteCentre){
+
+    public void verifyIfElectionsEnded() {
+        if (this.RecievedVoteCente == this.totalVoteCentre) {
             this.printFinalElectionResult();
         }
     }
 
-    
     public void printFinalElectionResult() {
         System.out.println("\n********************************************");
         System.out.println("         OFFICIAL FINAL ELECTION RESULTS     ");
         System.out.println("********************************************");
-                
+
         String winnerName = totalVoteResult.entrySet().stream()
-            .max(Map.Entry.comparingByValue())
-            .map(Map.Entry::getKey)
-            .orElse("N/A");
-        
+                .max(Map.Entry.comparingByValue())
+                .map(Map.Entry::getKey)
+                .orElse("N/A");
+
         int totalVoterTurnout = totalVoteResult.values().stream().reduce(totalVoteCentre, Integer::sum);
         double averageVotesPerCentre = 0;
-        if (!voteCenterPartialResult.isEmpty()) {
-            averageVotesPerCentre = (double) totalVoterTurnout / voteCenterPartialResult.size();
-        }System.out.println("FINAL RESULTS BY PARTY:");
-        
-        Map<String,Integer> totalVotePerCentre = new HashMap();
-        this.voteCenterPartialResult.forEach((k,v) -> {
+        if (!voteCentresResult.isEmpty()) {
+            averageVotesPerCentre = (double) totalVoterTurnout / voteCentresResult.size();
+        }
+        System.out.println("FINAL RESULTS BY PARTY:");
+
+        Map<String, Integer> totalVotePerCentre = new HashMap();
+        this.voteCentresResult.forEach((k, v) -> {
             int totalVotes = v.values().stream().reduce(totalVoteCentre, Integer::sum);
             totalVotePerCentre.put(k, totalVotes);
         });
-        
-        String centreWithMostVotes = Collections.max(totalVotePerCentre.entrySet(), Map.Entry.comparingByValue()).getKey();
-                
+
+        String centreWithMostVotes = Collections.max(totalVotePerCentre.entrySet(), Map.Entry.comparingByValue())
+                .getKey();
+
         totalVoteResult.forEach((party, total) -> System.out.println(" - " + party + ": " + total));
 
         System.out.println("\n--- THE WINNER: " + winnerName.toUpperCase() + " ---");
