@@ -38,3 +38,5 @@ nbdist/
 .nb-gradle/
 /CW02/DistributeudNumericalIntegration/target/
 /CW02/DistributedVoting/target/
+/LoadBalancer/target/
+/CW02/LoadBalancer/target/
