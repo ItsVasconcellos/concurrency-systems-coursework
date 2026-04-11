@@ -24,7 +24,7 @@ public class CentralAggregator {
     private Map<String, Integer> totalVoteResult;
     private Channel chanell;
     private int totalVoteCentre;
-    private int RecievedVoteCente;
+    private int receivedVoteCente;
 
     public CentralAggregator(String queueName, Channel ch, int totalVoteCentre) {
         this.queueName = queueName;
@@ -32,7 +32,7 @@ public class CentralAggregator {
         this.totalVoteCentre = totalVoteCentre;
         this.voteCentresResult = new HashMap<String, Map<String, Integer>>();
         this.totalVoteResult = new HashMap<String, Integer>();
-        this.RecievedVoteCente = 0;
+        this.receivedVoteCente = 0;
     }
 
     public void processVotes(String message) throws JsonProcessingException {
@@ -42,7 +42,7 @@ public class CentralAggregator {
         // Verify if that voteCentre has ended its votes and if yes, if all voteCentres
         // have finished.
         if (vb.isAllVotesProcessed()) {
-            this.RecievedVoteCente += 1;
+            this.receivedVoteCente += 1;
             this.verifyIfElectionsEnded();
             return;
         }
@@ -81,22 +81,27 @@ public class CentralAggregator {
     }
 
     private void displayCurrentTally() {
-        System.out.println(">>> CURRENT GLOBAL TALLY <<<");
+        System.out.println("\n>>> CURRENT TALLY <<<");
         String winner = "Tie/None";
         int maxVotes = -1;
 
+        voteCentresResult.forEach((k,v) -> {
+            System.out.println(">>>> " + k + " <<<<");
+            v.forEach((key, value) -> { System.out.println(" - " + key + ": " + value); });
+        });
+        
+        
         for (var entry : totalVoteResult.entrySet()) {
-            System.out.println("  " + entry.getKey() + ": " + entry.getValue());
             if (entry.getValue() > maxVotes) {
                 maxVotes = entry.getValue();
                 winner = entry.getKey();
             }
         }
-        System.out.println("Current Winner: " + winner.toUpperCase());
+        System.out.println("\nCurrent Winner: " + winner.toUpperCase());
     }
 
     public void verifyIfElectionsEnded() {
-        if (this.RecievedVoteCente == this.totalVoteCentre) {
+        if (this.receivedVoteCente == this.totalVoteCentre) {
             this.printFinalElectionResult();
         }
     }

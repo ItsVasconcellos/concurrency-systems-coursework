@@ -47,7 +47,6 @@ public class VoteCentre {
             VoteBatch vb = new VoteBatch(this.centreId, this.voteBatch, false);
             ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
             String json = ow.writeValueAsString(vb);
-            System.out.println(this.queueName);
             this.channel.basicPublish("", this.queueName, null, json.getBytes(StandardCharsets.UTF_8));
             System.out.println(" [x] Sent '" + json + "'");
         }
@@ -61,8 +60,8 @@ public class VoteCentre {
             VoteBatch vb = new VoteBatch(this.centreId, new HashMap<>(), true);
             ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
             String json = ow.writeValueAsString(vb);
-            System.out.println(this.queueName);
             this.channel.basicPublish("", this.queueName, null, json.getBytes(StandardCharsets.UTF_8));
+            System.out.println(" [x] Sent '" + json + "'");
         }
         catch(Exception e){
             System.out.println("Error: " + e.getMessage() + " - " + e.getClass());

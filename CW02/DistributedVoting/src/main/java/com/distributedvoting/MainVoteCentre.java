@@ -8,6 +8,7 @@ import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 /**
@@ -18,7 +19,7 @@ public class MainVoteCentre {
     
     public static final String queueName = "Elections";
     
-    public static void main(String[] args) throws IOException, TimeoutException{
+    public static void main(String[] args) throws IOException, TimeoutException, InterruptedException{
         
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost("localhost");
@@ -28,9 +29,13 @@ public class MainVoteCentre {
             VoteCentre vc = new VoteCentre(channel, queueName);
             for(int i = 0; i<5; i++){
                 vc.generateVotes();
+                TimeUnit.SECONDS.sleep(1);
                 vc.sendVotes();
             }
             vc.sendFinalMessage();
+        }
+        catch(IOException | TimeoutException | InterruptedException e){
+            System.out.println("Error happened during execution: " + e.getMessage() );
         }
 
     }    
